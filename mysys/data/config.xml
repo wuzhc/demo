@@ -1,0 +1,32 @@
+<root>
+    <dsn>this is a config file......</dsn>
+    <control>
+        <view>main</view>
+        <view status="CMD_OK">main</view>
+        <view status="CMD_ERROR">error</view>
+
+        <command name="ListVenues">
+            <view>Listvenues</view>
+        </command>
+
+        <command name="QuickAddVenue">
+            <classroot name="AddVenue" />
+            <view>quickadd</view>
+        </command>
+
+        <command name="AddVenue">
+            <view>addVenue</view>
+            <status value="CMD_OK">
+                <forward>AddSpace</forward>
+            </status>
+        </command>
+
+        <command name="AddSpace">
+            <view>addSpace</view>
+            <status value="CMD_OK">
+                <forward>ListVenues</forward>
+            </status>
+        </command>
+
+    </control>
+</root>

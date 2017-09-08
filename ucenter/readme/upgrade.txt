@@ -1,0 +1,41 @@
+//=========================================
+// UCenter 程序升级文档
+//=========================================
+
+UCenter 1.5.2 To UCenter 1.6.0
+-------------------------------
+1、备份 UCenter 数据库
+2、上传 UCenter 1.6.0 的程序文件
+3、上传 utilities 中的 upgrade_1.5.2_1.6.0.php 到 UCenter 的根目录
+4、直接访问 upgrade_1.5.2_1.6.0.php
+5、直到升级成功
+6、登陆服务器删除 upgrade_1.5.2_1.6.0.php
+
+
+
+UCenter 1.5.0 To UCenter 1.5.2
+-------------------------------
+1、备份 UCenter 数据库
+2、上传 UCenter 1.5.2 的程序文件
+
+
+
+UCenter 1.0.0 To UCenter 1.5.0
+-------------------------------
+1、备份 UCenter 数据库
+2、上传 UCenter 1.5.0 的程序文件
+3、上传 utilities 中的 upgrade_1.0.0_1.5.0.php 到 UCenter 的根目录
+4、直接访问 upgrade_1.0.0_1.5.0.php
+5、直到升级成功
+6、登陆服务器删除 upgrade_1.0.0_1.5.0.php
+
+
+
+UCenter 1.0.0测试版 To UCenter 1.0.0
+-------------------------------
+1、备份 UCenter 数据库
+2、上传 UCenter 1.0.0 的程序文件
+3、上传 utilities 中的 upgrade_1.0.0Beta_1.0.0.php 到 UCenter 的根目录
+4、直接访问 upgrade_1.0.0Beta_1.0.0.php
+5、直到升级成功
+6、登陆服务器删除 upgrade_1.0.0Beta_1.0.0.php

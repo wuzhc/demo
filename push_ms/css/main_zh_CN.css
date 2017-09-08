@@ -1,0 +1,595 @@
+body{
+    background-color:#FFF;
+    /*font-family: Helvetica,Arial,Freesans,Clean,sans-serif;*/
+    /*font-family: Helvetica Neue, Luxi Sans, DejaVu Sans, Tahoma, Hiragino Sans GB, STHeiti, Microsoft YaHei, sans-serif;*/
+    /*font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei", sans-serif;*/
+    font: 12px/1.5 "\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Hiragino Sans GB",tahoma,arial,"\5B8B\4F53" !important;
+    color:#000;
+}
+@media screen and (min-width:480px) and (max-width:639px) {
+    html {
+        font-size: 15px
+    }
+}
+ 
+@media screen and (min-width:640px) and (max-width:719px) {
+    html {
+        font-size: 20px
+    }
+}
+ 
+@media screen and (min-width:720px) and (max-width:749px) {
+    html {
+        font-size: 22.5px
+    }
+}
+ 
+@media screen and (min-width:750px) and (max-width:799px) {
+    html {
+        font-size: 23.5px
+    }
+}
+ 
+@media screen and (min-width:800px) and (max-width:959px) {
+    html {
+        font-size: 25px
+    }
+}
+ 
+@media screen and (min-width:960px) and (max-width:1079px) {
+    html {
+        font-size: 30px
+    }
+}
+ 
+@media screen and (min-width:1080px) {
+    html {
+        font-size: 32px
+    }
+}
+.cb{
+    clear: both;
+}
+.container{
+    width: 100%;
+    margin: 0 auto;
+}
+span{
+    word-wrap:break-word;
+}
+.navigator span {
+    padding: 4px 23px;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.navigator {
+    height: 100px;
+    padding-top: 25px;
+}
+
+.navigator span a, .login span a {
+    color: #000;
+    font-size:20px;
+    font-weight:bold;
+    text-decoration: none;
+}
+
+.logo {
+    float: left;
+    width: 200px;
+    height: 100px;
+}
+.logo img{
+    border: none;
+}
+.menu {
+    float: left;
+    height: 100px;
+    width:795px;
+}
+
+.login {
+    float: right;
+    height: 100px;
+    padding-top: 25px;
+    width:205px;
+}
+
+
+.selector{
+    background: #F2F2F2;
+    float:left;
+    text-align:center;
+    padding-top:10px;
+    cursor: pointer;
+    width: 399px;
+    border-right: 1px solid #CCC;
+}
+.step1 .selector{
+    width: 399px;
+}
+.language-selector .last-child{
+    width: 400px;
+    border-right: none;
+}
+.step1 .language-selector .last-child{
+    width: 200px;
+    border-right: none;
+}
+.language-selector .active{
+    background-color: #FFF;
+}
+.sample{
+    display: none;
+    font-size: 17px;
+    line-height: 1.45;
+    font-family: Helvetica,Arial,Freesans,Clean,sans-serif;
+}
+.sample pre{
+    font-family: Helvetica,Arial,Freesans,Clean,sans-serif;
+}
+.sample-code .active{
+    display: block;
+}
+.step{
+    width:1200px;
+    border: 1px solid #CCC;
+    background: #FFF;
+    margin: 0 auto;
+}
+.step1{
+    width:600px;
+}
+.language-selector{
+    height:30px;
+    border-top: 1px solid #CCC;
+}
+h4{
+    clear: both;
+    font-size:16px;
+}
+.high-light{
+    color:#718C00;
+}
+.todo{
+    color:#3394BF;
+}
+.content, .header {
+    width: 80%;
+    margin: 0 auto;
+}
+.hljs-comment{
+    color: #8E908C;
+}
+.hljs-keyword{
+    color: #8959A8;
+}
+
+table tr th{
+    text-align: left;
+}
+.label{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.pic {
+    margin-right: 46px;
+    width: 550px;
+    height: 407px;
+}
+
+.footer{
+    font: Helvetica,Arial,Freesans,Clean,sans-serif !important;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    margin: 50px auto 0 auto;
+    border-top: 1px solid #444;
+    padding-top: 25px;
+}
+
+table{
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+table tr th, table tr td{
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    padding: 4px 0 4px 4px;
+}
+table tr td{
+    font-weight:normal;
+    font-size:14px;
+}
+
+.form {
+    border: 0 solid #ccc;
+    padding: 4px 0 4px 4px;
+}
+.signupform table{
+    margin: 0 auto;
+}
+.signupform table tr{
+    width: 350px;
+}
+.signupform table tr .label{
+    width: 150px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #000;
+}
+.signupform table tr th, .signupform table tr td {
+    border: 0 solid #ccc;
+    padding: 0 0 0 0;
+}
+.signupform  table tr .form-input, .signupform table tr .form-input input, .signupform table tr .form-input-btn{
+    width: 230px;
+    height: 30px;
+    font-size:16px;
+}
+
+.signupform table tr  select{
+    height: 35px;
+    font-size:16px;
+    padding-left: 2px;
+}
+.signupform  table tr .form-input input,.signupform  table tr .form-input select{
+    border: 1px solid grey;
+}
+.signupform .error{
+    color:#d15050;
+}
+.signupform{
+    width: 1180px;
+    margin:auto;
+}
+fieldset.signupform legend{
+    font-weight: normal;
+    font-size:22px;
+    color:black;
+}
+.signupform table{
+    width:100%;
+    padding-left: 300px;
+}
+.signupform table tr{
+    height: 40px;
+}
+.signupform .error{
+    padding-left: 10px;
+}
+.signupform .signup-content{
+    margin-top: 30px;
+}
+.signupform input{
+    padding-left: 8px;
+    padding-right: 4px;
+}
+.signupform .actions{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 553px;
+}
+.signupform .actions input{
+    font-size: 14px;
+    color:white;
+    background-color:#000;
+    cursor: pointer;
+    padding: 6px 15px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-2 .selected-flag{
+    width:75px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-3 .selected-flag{
+    width:85px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-4 .selected-flag{
+    width:93px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-5 .selected-flag{
+    width:100px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-2 input, .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-2 input[type="text"], .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-2 input[type="tel"]{
+    padding-left: 80px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-3 input, .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-3 input[type="text"], .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-3 input[type="tel"]{
+    padding-left: 90px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-4 input, .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-4 input[type="text"], .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-4 input[type="tel"]{
+    padding-left: 98px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-5 input, .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-5 input[type="text"], .intl-tel-input.allow-dropdown.separate-dial-code.iti-sdc-5 input[type="tel"]{
+    padding-left: 107px;
+}
+.flag-container input, .flag-container input[type="text"], .flag-container input[type="tel"]{
+    padding-left:86px;
+}
+.intl-tel-input.allow-dropdown.separate-dial-code .selected-dial-code{
+    font-size:14px;
+}
+.intl-tel-input.allow-dropdown .flag-container{
+    height: 38px;;
+}
+.restful{
+    line-height: 1;
+}
+
+ul li{
+    line-height: 24px;
+}
+#description p{
+    line-height: 28px;
+}
+
+.login .singup{
+    background-color:#000;cursor: pointer;padding: 8px 0;
+}
+.login .singup a{
+    padding:0 15px;font-size: 14px;color:white;text-decoration: none;
+}
+.home h2{
+    font-size:20px;
+}
+
+.home .pic-line{
+    clear: both;
+    text-align: center;
+    border-top: 1px solid black;
+}
+.home .pic-line1{
+    height: 620px;
+}
+.home .pic-line .vertical-line{
+    float:left;
+    width:18px;
+    border-right: 1px solid #000;
+    height: 420px;
+    margin-top:15px;
+}
+.home .pic-line .title{
+    font-size: 32px;
+    margin: 40px;
+}
+.home .pic-line .title .features{
+    font-size:18px;
+    margin-top:10px;
+}
+.home .pic-line .note{
+    font-size:18px;
+}
+
+.home .pic1, .home .pic2{
+    font-size:24px;
+    font-weight: bold;
+    padding:8px 0;
+}
+.home .pic-line1 .pic1{
+    float: left;
+    width: 578px;
+    height: 420px;
+    text-align: center
+}
+.home .pic-line1 .pic2{
+    float: left;
+    width: 580px;
+    height: 500px;
+    text-align: center;
+    padding-left: 18px;
+}
+.home .pic-line2{
+    height:300px;
+}
+.home .pic-line2 .browsers{
+    margin-left:180px;
+}
+.home .pic-line2 .browsers .browser{
+    float:left;
+    width:140px;
+}
+.home .pic-line2 .browsers .browser.other{
+    width:160px;
+}
+.home .pic-line2 .browsers .browser img{
+    width:60px;
+    height: 60px;
+}
+.home .pic-line2 .browsers .browser .desc{
+    font: 18px Helvetica,Arial,Freesans,Clean,sans-serif !important;
+    padding:30px 0;
+}
+.home .pic-line3{
+    height:290px;
+}
+.home .pic-line3 .languages{
+    margin-left: 200px;
+    height:135px;
+}
+.home .pic-line3 .languages .language{
+    float:left;
+    width: 85px;
+    height: 85px;
+    margin:0 8px
+}
+.home .pic-line3 .languages .language div{
+    position:relative;
+    font-size: 18px;
+    font-weight:bold;
+    top:-60px;
+}
+.home .pic-line3 .languages .language div.others{
+    font-size: 15px;
+    top:-68px;
+}
+.home .pic-line4 .pic1{
+    float: left;
+    width: 340px;
+    height: 380px;
+    border: 1px solid #000;
+    padding:0;
+}
+.home. pic-line4 .pic1 img{
+    margin-top: 10px;
+}
+.home .pic-line4 .pic2{
+    float: left;
+    width: 398px;
+    height: 380px;
+    border: 1px solid #000;
+    margin-left: 27px;
+    padding:0;
+}
+.home .pic-line4 .pic2 img{
+    margin-top: 35px;
+    width:398px
+}
+
+.home .pic-line4 .pic3{
+    float: left;
+    width: 400px;
+    height: 380px;
+    border: 1px solid #000;
+    margin-left: 27px;
+    padding:0;
+}
+.home .note{
+    clear: both;
+    font-size: 20px;
+}
+.home .note .text{
+    margin: 20px;
+}
+.started h1{
+    font-size:24px;
+}
+.started h2{
+    font-size:20px;
+}
+.started ul li{
+    font-size:14px;
+}
+.started .desc{
+    font-size:14px;
+}
+.sample .tip{
+    padding-left:100px;
+    padding-right: 80px;
+    padding-top:30px;
+    color: red;
+    font-size:14px;
+}
+.sample.java .way{
+    font-weight: bold;
+    font-size: 18px;
+}
+.sample.java .desc{
+    font-size:14px;
+}
+.docs ul li a{
+    font-size:14px;
+}
+.demos ul li a{
+    font-size:14px;
+}
+
+.activate-form{
+    width: 1180px;
+    margin: auto;
+}
+fieldset.activate-form legend{
+    font-weight: normal;
+    font-size:24px;
+}
+.activate-form input{
+    height: 26px;
+}
+.form-group{
+    clear:both;
+}
+.form-group div{
+    float: left;
+    margin-left: 5px;
+}
+.form-group .form-label{
+    width: 120px;
+    height: 26px;
+    padding:10px 4px 0 0;
+    margin-left: 0;
+}
+.activate-content{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 17px;
+}
+.activate-content .activate-area{
+    margin-top: 50px;
+    font-size:14px;
+}
+.activate-area, .resend-area{
+    padding-left:340px;
+}
+.activate-content .tip-area{
+    font-size:20px;
+    font-weight: bold;
+    text-align: center;
+}
+.activate-area .form-group{
+    margin-top: 20px;
+}
+.activate-area .form-control{
+    width:100px;
+    height: 30px;
+    margin-left: 0;
+}
+.activate-area .form-control input{
+    width:100px;
+    font-size:16px;
+    margin-top:3px;
+    height: 28px;
+}
+.activate-area .activateBtn{
+    font-size: 18px;
+    height:40px;
+    color:white;
+    background-color:black;
+    cursor: pointer;
+    padding: 6px 15px;
+    margin-left:60px;
+}
+.resend-area{
+    clear: both;
+    margin-top: 40px;
+    font-size:14px;
+}
+.activate-content .btn{
+    font-size: 12px;
+    height: 40px;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    padding: 6px 15px;
+}
+.resend-area .actions button{
+    margin-top:8px;
+}
+.resend-area .actions .rightBtn{
+    margin-left: 30px;
+}
+.form-error{
+    color:red;
+    padding-top:10px;
+}
+.resend-area .actions .disabled{
+    background-color: gray;
+}
+.exchange-rate .desc{
+    width: 800px;
+    margin: 0 auto;
+}
+
+.subscribe-area .actions button{
+    height: 30px;
+    margin-top:3px;
+}
+

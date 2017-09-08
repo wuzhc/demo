@@ -1,0 +1,8 @@
+# .htaccess 放在根目录下
+# 开启 rewrite 功能
+Options +FollowSymlinks
+RewriteEngine on
+
+# 重写规则
+RewriteRule ^test/restful/site/list/$   test/restful/RestController.php?view=all [nc,qsa]
+RewriteRule ^test/restful/site/list/([0-9]+)/$   test/restful/RestController.php?view=single&id=$1 [nc,qsa]
