@@ -7,7 +7,7 @@
  */
 
 try {
-    $pdo = new PDO('mysql:dbname=shop;host=localhost', 'root', 'wuzhc2580');
+    $pdo = new PDO('mysql:dbname=shop;host=localhost', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->query('set names utf8');
 } catch (PDOException $e) {
@@ -15,4 +15,4 @@ try {
 }
 
 $redis = new Redis();
-$redis->connect('127.0.0.1');
+$redis->connect('127.0.0.1', 6380);

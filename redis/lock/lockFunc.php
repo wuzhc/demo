@@ -18,9 +18,9 @@ $redis->connect('127.0.0.1');
 function acquireLock($lockName, $timeout = 3)
 {
     global $redis;
-    $identifier = 1;
+    $identifier = uniqid();
     $end = time() + $timeout;
-    while ($end > time()) {
+    while ($end >= time()) {
         if ($redis->set($lockName, $identifier, array('nx'))) {
             return $identifier;
         }
