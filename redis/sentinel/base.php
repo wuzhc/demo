@@ -1,37 +1,3 @@
-> 基于TCP建立协议，
-#### redis命令发送格式：
-*<参数数量> CRLF  
-$<参数 1 的字节数量> CRLF  
-<参数 1 的数据> CRLF  
-...  
-$<参数 N 的字节数量> CRLF  
-<参数 N 的数据> CRLF  
-其中CRLF表示 \r\n  
-
-##### 举个例子：set name wuzhc
-##### 格式化输出：
-*3  
-$3  
-set  
-$4  
-name  
-$5  
-wuzhc  
-##### 说明：
-- \*开头，表示有多少个参数，例如*3表示有3个参数（set, name, wuzhc）
-- $开头，表示参数的字节长度，例如$3表示set有3个字节，$4表示name有4个字节
-- 每行\r\n结尾
-##### 这个通信协议为 *3\r\n$3\r\nset\r\n$4\r\nname\r\n$5\r\nwuzhc\r\n
-
-#### Redis 回复
-- 状态回复（status reply）的第一个字节是 "+"，例如+OK\r\n
-- 错误回复（error reply）的第一个字节是 "-"，例如-No such key\r\n
-- 整数回复（integer reply）的第一个字节是 ":"，例如:1\r\n
-- 批量回复（bulk reply）的第一个字节是 "$"，例如 $3\r\nabc\r\n
-- 多条批量回复（multi bulk reply）的第一个字节是 "*"，例如\*2\r\n$3\r\nabc\r\n$3\r\nxyz\r\n
-
-#### PHP 实现Redis客户端
-```php
 <?php
 /**
  * Created by PhpStorm.
@@ -155,5 +121,3 @@ class PRedis
         return $this->_error;
     }
 }
-
-```
