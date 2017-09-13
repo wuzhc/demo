@@ -16,12 +16,12 @@ do
     i=`expr $i + 1`
 done
 
-for p in ${portFiles}
+for p in ${portFiles[@]}
 do
     echo $p
 done
 
-for pid in ${pidFiles}
+for pid in ${pidFiles[@]}
 do
     echo $pid
 done
