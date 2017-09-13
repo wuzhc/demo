@@ -16,12 +16,64 @@ do
     i=`expr $i + 1`
 done
 
-for p in ${portFiles[@]}
-do
-    echo $p
-done
+start(){
+    for port in ${ports[@]}
+    do
+        confFile="/usr/local/redis/etc/${port}.conf"
+        pidFile="/var/run/${port}.pid"
+        if [ -e pidFile ]
+        then
+            echo "redis ${port} running"
+        else
+            $REDIS_SERVER ${confFile}
+        fi
+        if [ $? eq 0 ]
+        then
+            echo "redis ${port} has run"
+        else
+            echo "redis ${port} start failed"
+        fi
+    done
+}
 
-for pid in ${pidFiles[@]}
-do
-    echo $pid
-done
+stop(){
+    for port in ${ports[@]}
+    do
+        confFile="/usr/local/redis/etc/${port}.conf"
+        pidFile="/var/run/${port}.pid"
+        if [ -e $pidFile ]
+        then
+            echo "redis ${port} stopping..."
+            $REDIS_CLI -p ${port} shutdown
+            sleep 2
+            while [ -e $pidFile ]
+            do
+                echo "waiting for redis ${port} to shutdown"
+            done
+            echo "redis ${port} has shutdown"
+        else
+            echo "redis ${port} has shutdown"
+        fi
+    done
+}
+
+restart(){
+    stop
+    sleep(2)
+    start
+}
+
+case $1 in:
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+esac
+
