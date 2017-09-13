@@ -3,7 +3,7 @@
 # author: wuzhc2016@163.com
 # date: 2017-09-13
 
-ports=(6379 6380 6381)
+ports=(6380 6381)
 REDIS_SERVER=/usr/local/redis/bin/redis-server
 REDIS_CLI=/usr/local/redis/bin/redis-cli
 
@@ -27,7 +27,7 @@ start(){
         else
             $REDIS_SERVER ${confFile}
         fi
-        if [ $? eq 0 ]
+        if [ $? -eq 0 ]
         then
             echo "redis ${port} has run"
         else
@@ -59,11 +59,11 @@ stop(){
 
 restart(){
     stop
-    sleep(2)
+    sleep 2
     start
 }
 
-case $1 in:
+case $1 in
     start)
         start
         ;;
