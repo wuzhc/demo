@@ -1,4 +1,3 @@
-> 基于TCP建立协议，
 #### redis命令发送格式：
 *<参数数量> CRLF  
 $<参数 1 的字节数量> CRLF  
@@ -40,12 +39,10 @@ wuzhc
  * Time: 9:08
  */
 
-class PRedis
+class Client
 {
     private $_socket = null;
 
-    private $_error = null;
-    
     public function __construct($ip, $port) 
     {
         $this->_socket = stream_socket_client(
@@ -56,7 +53,7 @@ class PRedis
             STREAM_CLIENT_CONNECT
         );
         if (!$this->_socket) {
-            $this->_error = $errstr;
+            exit($errstr);
         }
     }
 
@@ -67,10 +64,6 @@ class PRedis
      */
     public function exec($command)
     {
-        if ($this->_error) {
-            return false;
-        }
-
         // 拼装发送命令格式
         $command = $this->_execCommand($command);
 
@@ -145,15 +138,11 @@ class PRedis
                 return $data;
         }
     }
-
-    /**
-     * 错误信息
-     * @return null
-     */
-    public function getError()
-    {
-        return $this->_error;
-    }
 }
 
+// demo
+$client = new Client('127.0.0.1', 6379);
+$client->exec('set name wuzhc');
+$rs = $client->exec('get name');
+var_dump($rs);
 ```

@@ -6,7 +6,7 @@
  * Time: 9:08
  */
 
-class PRedis
+class Client
 {
     private $_socket = null;
 
@@ -31,14 +31,14 @@ class PRedis
      * @param $command
      * @return array|bool|string
      */
-    public function exec($command)
+    public function exec($command, $parse = false)
     {
         if ($this->_error) {
             return false;
         }
 
         // 拼装发送命令格式
-        $command = $this->_execCommand($command);
+        $parse or $command = $this->execCommand($command);
 
         // 发送命令到redis
         fwrite($this->_socket, $command);
@@ -53,7 +53,7 @@ class PRedis
      * @param $command
      * @return bool|string
      */
-    private function _execCommand($command)
+    public function execCommand($command)
     {
         $line = '';
         $crlf = "\r\n";
@@ -121,3 +121,10 @@ class PRedis
         return $this->_error;
     }
 }
+
+$redis = new Client('127.0.0.1', 6379);
+$command = $redis->execCommand('set node-1 node-1') . $redis->execCommand('set node-2 node-2');
+//$rs = $redis->exec($command);
+var_dump($command);
+
+
