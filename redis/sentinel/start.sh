@@ -9,7 +9,7 @@ REDIS_CLI=/usr/local/redis/bin/redis-cli
 
 # redis 配置文件, pid文件
 i=0
-for port in ${ports}
+for port in ${ports[@]}
 do
     portFiles[$i]="/usr/local/redis/etc/${port}.conf"
     pidFiles[$i]="/var/run/${port}.pid"
