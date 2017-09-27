@@ -423,14 +423,14 @@ class Worker
         self::checkSapiEnv();
         self::init();
         self::parseCommand();
-        self::daemonize();
+        self::daemonize(); // 变为守护进程
         self::initWorkers();
-        self::installSignal();
+        self::installSignal(); // 安装信号
         self::saveMasterPid();
-        self::forkWorkers();
+        self::forkWorkers(); // 创建workers
         self::displayUI();
         self::resetStd();
-        self::monitorWorkers();
+        self::monitorWorkers(); // 监控信号
     }
 
     /**
