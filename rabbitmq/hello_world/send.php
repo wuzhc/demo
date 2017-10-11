@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: wuzhc
+ * User: wuzhc2016@163.com
  * Date: 2017年09月29日
  * Time: 13:51
  */
@@ -18,7 +18,7 @@ $channel = $connection->channel();
 $channel->queue_declare('hello', false, false, false, false);
 // $msg
 $msg = new AMQPMessage('hello word');
-//
+
 $channel->basic_publish($msg, '', 'hello');
 echo " [x] Sent 'Hello World!'\n";
 $channel->close();
