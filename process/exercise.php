@@ -50,23 +50,30 @@ function main()
     // 标准输入
     $stdin = fopen('php://stdin', 'r');
     while (1) {
-        $a = rand(0, 10);
-        $b = rand(0, 10);
-        pcntl_alarm(3); // 3秒发一次SIGALRM信号
+        $pid = pcntl_fork();
+        if ($pid == 0) {
+            $a = rand(0, 10);
+            $b = rand(0, 10);
 
-        // 调用信号函数
-        while (1) {
-            sleep(1);
-            pcntl_signal_dispatch();
+            echo "What $a * $b = ? \n";
+            $answer = trim(fgets($stdin));
+            if ($answer == ($a * $b)) {
+                $score++;
+            } else {
+                echo "Wrong! Your score is $score \n";
+            }
+        } elseif ($pid > 0) {
+            pcntl_alarm(3); // 3秒发一次SIGALRM信号
+
+            // 调用信号函数
+            while (1) {
+                sleep(1);
+                pcntl_signal_dispatch(); // 1秒检查一次是否为信号处理
+            }
+
+            pcntl_waitpid($pid, $status, 0); // 等待进程结束
         }
 
-        echo "What $a * $b = ? \n";
-        $answer = trim(fgets($stdin));
-        if ($answer == ($a * $b)) {
-            $score++;
-        } else {
-            echo "Wrong! Your score is $score \n";
-        }
     }
 }
 
