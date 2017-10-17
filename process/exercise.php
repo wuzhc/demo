@@ -71,7 +71,7 @@ function main()
                 pcntl_signal_dispatch(); // 1秒检查一次是否为信号处理
             }
 
-            pcntl_waitpid($pid, $status, 0); // 等待进程结束
+            pcntl_waitpid($pid, $status, WNOHANG); // 等待进程结束
         }
 
     }
