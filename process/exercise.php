@@ -6,7 +6,7 @@
  * Time: 16:09
  */
 
-declare(ticks = 1);
+//declare(ticks = 1);
 $score = 0;
 
 /**
@@ -40,6 +40,7 @@ function main()
 {
     global $score;
 
+    // 检测pcntl扩展
     check_pcntl();
 
     // 安装信号处理器
@@ -47,7 +48,7 @@ function main()
     pcntl_signal(SIGALRM, 'signal_handle');
 
     // 调用信号函数
-//    pcntl_signal_dispatch();
+    pcntl_signal_dispatch();
 
     // 标准输入
     $stdin = fopen('php://stdin', 'r');
