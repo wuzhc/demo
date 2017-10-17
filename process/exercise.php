@@ -55,7 +55,10 @@ function main()
         pcntl_alarm(3); // 3秒发一次SIGALRM信号
 
         // 调用信号函数
-        pcntl_signal_dispatch();
+        while (1) {
+            sleep(1);
+            pcntl_signal_dispatch();
+        }
 
         echo "What $a * $b = ? \n";
         $answer = trim(fgets($stdin));
