@@ -47,15 +47,15 @@ function main()
     pcntl_signal(SIGINT, 'signal_handle');
     pcntl_signal(SIGALRM, 'signal_handle');
 
-    // 调用信号函数
-    pcntl_signal_dispatch();
-
     // 标准输入
     $stdin = fopen('php://stdin', 'r');
     while (1) {
         $a = rand(0, 10);
         $b = rand(0, 10);
         pcntl_alarm(3); // 3秒发一次SIGALRM信号
+
+        // 调用信号函数
+        pcntl_signal_dispatch();
 
         echo "What $a * $b = ? \n";
         $answer = trim(fgets($stdin));
