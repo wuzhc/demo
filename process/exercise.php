@@ -19,7 +19,7 @@ function signal_handle($signal)
     switch ($signal) {
         case SIGINT:
             echo "Game Over \n";
-            echo "Your Score is $score";
+            echo "Your Score is $score \n";
             exit(0);
             break;
         case SIGALRM:
