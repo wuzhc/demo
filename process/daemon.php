@@ -3,28 +3,30 @@
 /**
  * @author tengzhaorong@gmail.com
  * @date 2013-07-25
- * ºóÌ¨½Å±¾¿ØÖÆÀà
  */
 class DaemonCommand
 {
 
     private $info_dir = "/tmp";
     private $pid_file = "";
-    private $terminate = false; //ÊÇ·ñÖÐ¶Ï
+    private $terminate = false;
     private $workers_count = 0;
     private $gc_enabled = null;
-    private $workers_max = 8; //×î¶àÔËÐÐ8¸ö½ø³Ì
+    private $workers_max = 8;
     public $jobs;
 
     public function __construct($is_sington = false, $user = 'nobody', $output = "/dev/null")
     {
-        $this->is_sington = $is_sington; //ÊÇ·ñµ¥ÀýÔËÐÐ£¬µ¥ÀýÔËÐÐ»áÔÚtmpÄ¿Â¼ÏÂ½¨Á¢Ò»¸öÎ¨Ò»µÄPID
-        $this->user = $user;//ÉèÖÃÔËÐÐµÄÓÃ»§ Ä¬ÈÏÇé¿öÏÂnobody
-        $this->output = $output; //ÉèÖÃÊä³öµÄµØ·½
+        $this->is_sington = $is_sington;
+        $this->user = $user;
+        $this->output = $output;
         $this->checkPcntl();
     }
 
-    //¼ì²é»·¾³ÊÇ·ñÖ§³ÖpcntlÖ§³Ö
+    /**
+     * æ£€æµ‹pcntlæ‰©å±•
+     * @throws Exception
+     */
     public function checkPcntl()
     {
         if (!function_exists('pcntl_signal_dispatch')) {
@@ -39,7 +41,8 @@ class DaemonCommand
             $this->_log($message);
             throw new Exception($message);
         }
-        //ÐÅºÅ´¦Àí
+
+        // å®‰è£…ä¿¡å·å¤„ç†å™¨
         pcntl_signal(SIGTERM, array(__CLASS__, "signalHandler"), false);
         pcntl_signal(SIGINT, array(__CLASS__, "signalHandler"), false);
         pcntl_signal(SIGQUIT, array(__CLASS__, "signalHandler"), false);
@@ -51,7 +54,7 @@ class DaemonCommand
         }
     }
 
-    // daemon»¯³ÌÐò
+    // å®ˆæŠ¤è¿›ç¨‹
     public function daemonize()
     {
 
@@ -60,35 +63,34 @@ class DaemonCommand
 
         set_time_limit(0);
 
-        // Ö»ÔÊÐíÔÚcliÏÂÃæÔËÐÐ
+        // php-cli æ¨¡å¼ä¸‹è¿è¡Œ
         if (php_sapi_name() != "cli") {
             die("only run in command line mode\n");
         }
 
-        // Ö»ÄÜµ¥ÀýÔËÐÐ
+        // å•ä¾‹æ¨¡å¼
         if ($this->is_sington == true) {
-
             $this->pid_file = $this->info_dir . "/" . __CLASS__ . "_" . substr(basename($argv[0]), 0, -4) . ".pid";
             $this->checkPidfile();
         }
 
-        umask(0); //°ÑÎÄ¼þÑÚÂëÇå0
+        umask(0); //ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
 
-        if (pcntl_fork() != 0) { //ÊÇ¸¸½ø³Ì£¬¸¸½ø³ÌÍË³ö
+        if (pcntl_fork() != 0) { //ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
             exit();
         }
 
-        posix_setsid();//ÉèÖÃÐÂ»á»°×é³¤£¬ÍÑÀëÖÕ¶Ë
+        posix_setsid();//ï¿½ï¿½ï¿½ï¿½ï¿½Â»á»°ï¿½é³¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¶ï¿½
 
-        if (pcntl_fork() != 0) { //ÊÇµÚÒ»×Ó½ø³Ì£¬½áÊøµÚÒ»×Ó½ø³Ì
+        if (pcntl_fork() != 0) { //ï¿½Çµï¿½Ò»ï¿½Ó½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ó½ï¿½ï¿½ï¿½
             exit();
         }
 
-        chdir("/"); //¸Ä±ä¹¤×÷Ä¿Â¼
+        chdir("/"); //ï¿½Ä±ä¹¤ï¿½ï¿½Ä¿Â¼
 
         $this->setUser($this->user) or die("cannot change owner");
 
-        //¹Ø±Õ´ò¿ªµÄÎÄ¼þÃèÊö·û
+        //ï¿½Ø±Õ´ò¿ªµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         fclose(STDIN);
         fclose(STDOUT);
         fclose(STDERR);
@@ -103,10 +105,12 @@ class DaemonCommand
 
     }
 
-    //--¼ì²âpidÊÇ·ñÒÑ¾­´æÔÚ
+    /**
+     * æ£€æµ‹è¿›ç¨‹æ–‡ä»¶
+     * @return bool
+     */
     public function checkPidfile()
     {
-
         if (!file_exists($this->pid_file)) {
             return true;
         }
@@ -118,10 +122,9 @@ class DaemonCommand
             $this->_log("the daemon process end abnormally, please check pidfile " . $this->pid_file);
         }
         exit(1);
-
     }
 
-    //----´´½¨pid
+    //----ï¿½ï¿½ï¿½ï¿½pid
     public function createPidfile()
     {
 
@@ -134,7 +137,7 @@ class DaemonCommand
         $this->_log("create pid file " . $this->pid_file);
     }
 
-    //ÉèÖÃÔËÐÐµÄÓÃ»§
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ã»ï¿½
     public function setUser($name)
     {
 
@@ -153,13 +156,13 @@ class DaemonCommand
 
     }
 
-    //ÐÅºÅ´¦Àíº¯Êý
+    //ï¿½ÅºÅ´ï¿½ï¿½ï¿½ï¿½ï¿½
     public function signalHandler($signo)
     {
 
         switch ($signo) {
 
-            //ÓÃ»§×Ô¶¨ÒåÐÅºÅ
+            //ï¿½Ã»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Åºï¿½
             case SIGUSR1: //busy
                 if ($this->workers_count < $this->workers_max) {
                     $pid = pcntl_fork();
@@ -168,13 +171,13 @@ class DaemonCommand
                     }
                 }
                 break;
-            //×Ó½ø³Ì½áÊøÐÅºÅ
+            //ï¿½Ó½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½Åºï¿½
             case SIGCHLD:
                 while (($pid = pcntl_waitpid(-1, $status, WNOHANG)) > 0) {
                     $this->workers_count--;
                 }
                 break;
-            //ÖÐ¶Ï½ø³Ì
+            //ï¿½Ð¶Ï½ï¿½ï¿½ï¿½
             case SIGTERM:
             case SIGHUP:
             case SIGQUIT:
@@ -188,14 +191,14 @@ class DaemonCommand
     }
 
     /**
-     *¿ªÊ¼¿ªÆô½ø³Ì
-     *$count ×¼±¸¿ªÆôµÄ½ø³ÌÊý
+     *ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     *$count ×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public function start($count = 1)
     {
 
         $this->_log("daemon process is running now");
-        // ÔÚÒ»¸ö½ø³ÌÖÕÖ¹»òÕßÍ£Ö¹£¬½«SIGCHLDÐÅºÅ·¢ËÍ¸ø¸¸½ø³Ì
+        // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½ï¿½ï¿½SIGCHLDï¿½ÅºÅ·ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         pcntl_signal(SIGCHLD, array(__CLASS__, "signalHandler"), false); // if worker die, minus children num
         while (true) {
             if (function_exists('pcntl_signal_dispatch')) {
@@ -213,11 +216,11 @@ class DaemonCommand
             }
 
             if ($pid > 0) {
-                // ¸¸½ø³Ì
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 $this->workers_count++;
             } elseif ($pid == 0) {
 
-                // Õâ¸ö·ûºÅ±íÊ¾»Ö¸´ÏµÍ³¶ÔÐÅºÅµÄÄ¬ÈÏ´¦Àí
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½Ê¾ï¿½Ö¸ï¿½ÏµÍ³ï¿½ï¿½ï¿½ÅºÅµï¿½Ä¬ï¿½Ï´ï¿½ï¿½ï¿½
                 pcntl_signal(SIGTERM, SIG_DFL);
                 pcntl_signal(SIGCHLD, SIG_DFL);
                 if (!empty($this->jobs)) {
@@ -248,7 +251,7 @@ class DaemonCommand
 
     }
 
-    //Õû¸ö½ø³ÌÍË³ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
     public function mainQuit()
     {
 
@@ -261,7 +264,7 @@ class DaemonCommand
         exit(0);
     }
 
-    // Ìí¼Ó¹¤×÷ÊµÀý£¬Ä¿Ç°Ö»Ö§³Öµ¥¸öjob¹¤×÷
+    // ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ä¿Ç°Ö»Ö§ï¿½Öµï¿½ï¿½ï¿½jobï¿½ï¿½ï¿½ï¿½
     public function setJobs($jobs = array())
     {
 
@@ -278,14 +281,14 @@ class DaemonCommand
 
         if (!isset($jobs['function']) || empty($jobs['function'])) {
 
-            $this->_log("Äã±ØÐëÌí¼ÓÔËÐÐµÄº¯Êý£¡");
+            $this->_log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄºï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
         $this->jobs = $jobs;
 
     }
 
-    //ÈÕÖ¾´¦Àí
+    //ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
     private function _log($message)
     {
         printf("%s\t%d\t%d\t%s\n", date("c"), posix_getpid(), posix_getppid(), $message);
@@ -293,21 +296,21 @@ class DaemonCommand
 
 }
 
-//µ÷ÓÃ·½·¨1
+// å®žä¾‹ä¸€
 $daemon = new DaemonCommand(true);
 $daemon->daemonize();
-$daemon->start(2);//¿ªÆô2¸ö×Ó½ø³Ì¹¤×÷
+$daemon->start(2);//ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½Ó½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
 work();
 
 
-//µ÷ÓÃ·½·¨2
+//ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½2
 $daemon = new DaemonCommand(true);
 $daemon->daemonize();
-$daemon->setJobs(array('function' => 'work', 'argv' => '', 'runtime' => 2));//function ÒªÔËÐÐµÄº¯Êý,argvÔËÐÐº¯ÊýµÄ²ÎÊý£¬runtimeÔËÐÐµÄ´ÎÊý
-$daemon->start(2);//¿ªÆô2¸ö×Ó½ø³Ì¹¤×÷
+$daemon->setJobs(array('function' => 'work', 'argv' => '', 'runtime' => 2));//function Òªï¿½ï¿½ï¿½ÐµÄºï¿½ï¿½ï¿½,argvï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½runtimeï¿½ï¿½ï¿½ÐµÄ´ï¿½ï¿½ï¿½
+$daemon->start(2);//ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½Ó½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
 
-//¾ßÌå¹¦ÄÜµÄÊµÏÖ
+//ï¿½ï¿½ï¿½å¹¦ï¿½Üµï¿½Êµï¿½ï¿½
 function work()
 {
-    echo "²âÊÔ1";
+    echo "ï¿½ï¿½ï¿½ï¿½1";
 }
