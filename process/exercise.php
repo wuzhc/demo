@@ -54,7 +54,7 @@ function main()
     while (1) {
         $a = rand(0, 10);
         $b = rand(0, 10);
-        pcntl_alarm(5); // 5秒发一次SIGALRM信号
+        pcntl_alarm(3); // 3秒发一次SIGALRM信号
 
         echo "What $a * $b = ? \n";
         $answer = trim(fgets($stdin));
