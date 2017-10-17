@@ -46,6 +46,7 @@ function main()
         $b = rand(0, 10);
         pcntl_alarm(5); // 5秒发一次SIGALRM信号
 
+        echo "What a * b = ? \n";
         $answer = trim(fgets($stdin));
         if ($answer == ($a * $b)) {
             $score++;
