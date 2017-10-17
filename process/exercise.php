@@ -29,9 +29,18 @@ function signal_handle($signal)
     }
 }
 
+function check_pcntl()
+{
+    if (!function_exists('pcntl_signal')) {
+        exit('can not support pcntl');
+    }
+}
+
 function main()
 {
     global $score;
+
+    check_pcntl();
 
     // 安装信号处理器
     pcntl_signal(SIGINT, 'signal_handle');
