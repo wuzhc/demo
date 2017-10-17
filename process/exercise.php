@@ -6,7 +6,7 @@
  * Time: 16:09
  */
 
-//declare(ticks = 1);
+declare(ticks = 1);
 $score = 0;
 
 /**
@@ -60,12 +60,6 @@ function main()
             $score++;
         } else {
             echo "Wrong! Your score is $score \n";
-        }
-
-        // 调用信号函数
-        while (1) {
-            sleep(1);
-            pcntl_signal_dispatch(); // 1秒检查一次是否为信号处理
         }
     }
 }
