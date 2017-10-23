@@ -6,7 +6,13 @@
  * Time: 16:49
  */
 
-include 'CMongo.php';
+if (extension_loaded('mongodb')) {
+    include 'CMongodb.php';
+} elseif (extension_loaded('mongo')) {
+    include 'CMongo.php';
+} else {
+    exit('Can not support mongo');
+}
 
 function request($url)
 {
@@ -18,23 +24,25 @@ function request($url)
     return $res;
 }
 
-function parse($content)
-{
-    return explode('#\s+#i', $content);
-}
-
-for ($i=23; $i<24; $i++) {
-    $records = array_filter(explode('<br>', request($url)));
+$data = [];
+for ($i=21; $i<24; $i++) {
+//    $records = array_filter(explode('<br>', request($url)));
+    $records = ['[2017-10-23 20:29:36] [kouzi] 17322535854 : Unrepeatable request'];
     foreach ($records as $record) {
         preg_match('/\[([\s\S]+)\]\s\[(\w+)\]\s(\w+)\s:\s([\s\S]+)/', $record, $match);
         array_shift($match);
         list($time, $from, $phone, $msg) = $match;
-        \mongo\CMongo::instance()->reset();
-        \mongo\CMongo::instance()->insert('foo', [
+        $data[] = [
             'time' => $time,
             'from' => $from,
             'phone' => $phone,
             'msg' => rtrim($msg)
-        ]);
+        ];
     }
+}
+
+if (class_exists('MongoDB\Driver\Manager')) {
+    \mongo\CMongodb::instance()->insert($data, 'wuzhc.sms');
+} else {
+    \mongo\CMongo::instance()->batchInsert('sms', $data);
 }

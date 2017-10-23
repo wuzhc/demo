@@ -24,7 +24,7 @@ class CMongo
     /** @var CMongo */
     private static $instance;
     
-    private function __contruct()
+    private function __construct()
     {
         try {
             self::$conn = new \MongoClient(sprintf('mongodb://%s:%s', MONGO_HOST, MONGO_PORT));
@@ -142,18 +142,29 @@ class CMongo
     //如果没有集合，插入数据会怎么样
     /**
      * 插入数据
-     * @param string $name 集合名称
+     * @param string $collection 集合名称
      * @param array $document 文档
      * @return bool
      * @since 2016-09-13
      */
-    public function insert($name, $document)
+    public function insert($collection, $document)
     {
         try {
-            self::$db->selectCollection($name)->insert($document);
+            self::$db->selectCollection($collection)->insert($document);
             return true;
         } catch (\MongoException $e) {
             exit($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string $collection
+     * @param array $documents
+     */
+    public function batchInsert($collection, array $documents)
+    {
+        foreach ((array)$documents as $document) {
+            $this->insert($collection, $document);
         }
     }
 
