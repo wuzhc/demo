@@ -18,16 +18,16 @@ defined('MONGO_PORT') or define('MONGO_PORT', '27017');
 class CMongo
 {
     /** @var \MongoClient */
-    private static $conn;
+    private $_conn;
     /** @var \MongoDB */
-    private static $db;
+    private $_db;
     /** @var CMongo */
     private static $instance;
     
     private function __construct()
     {
         try {
-            self::$conn = new \MongoClient(sprintf('mongodb://%s:%s', MONGO_HOST, MONGO_PORT));
+            $this->_conn = new \MongoClient(sprintf('mongodb://%s:%s', MONGO_HOST, MONGO_PORT));
         } catch (\MongoConnectionException $e) {
             exit($e->getMessage());
         }
@@ -59,7 +59,7 @@ class CMongo
     {
         $result = [];
 
-        $dbs = self::$conn->listDBs();
+        $dbs = $this->_conn->listDBs();
         foreach ((array)$dbs['databases'] as $db) {
             $result[] = $db;
         }
@@ -73,7 +73,7 @@ class CMongo
      */
     public function getConnections()
     {
-        return self::$conn->getConnections();
+        return $this->_conn->getConnections();
     }
 
     /**
@@ -84,7 +84,7 @@ class CMongo
     public function dropDB($db = '')
     {
         $db and $this->selectMongoDB($db);
-        $result = self::$db->drop();
+        $result = $this->_db->drop();
         return $result['ok'] == 1 ? true : false;
     }
 
@@ -107,7 +107,7 @@ class CMongo
         if (!empty($db)) {
             exit('DB can not empty');
         }
-        self::$db = self::$conn->selectDB($db);
+        $this->_db = $this->_conn->selectDB($db);
     }
 
     /**
@@ -118,7 +118,7 @@ class CMongo
     public function createCollection($name)
     {
         try {
-            self::$db->createCollection($name);
+            $this->_db->createCollection($name);
             return true;
         } catch (\MongoException $e) {
             exit($e->getMessage());
@@ -133,13 +133,12 @@ class CMongo
     public function selectCollection($name)
     {
         try {
-            return self::$db->selectCollection($name);
+            return $this->_db->selectCollection($name);
         } catch (\MongoException $e) {
             exit($e->getMessage());
         }
     }
 
-    //如果没有集合，插入数据会怎么样
     /**
      * 插入数据
      * @param string $collection 集合名称
@@ -150,7 +149,7 @@ class CMongo
     public function insert($collection, $document)
     {
         try {
-            self::$db->selectCollection($collection)->insert($document);
+            $this->_db->selectCollection($collection)->insert($document);
             return true;
         } catch (\MongoException $e) {
             exit($e->getMessage());
@@ -180,7 +179,7 @@ class CMongo
     public function remove($name, $condition = [], $option = [])
     {
         try {
-            self::$db->$name->remove($condition, $option);
+            $this->_db->$name->remove($condition, $option);
             return true;
         } catch (\MongoException $e) {
             exit($e->getMessage());
@@ -197,7 +196,7 @@ class CMongo
     public function findOne($name, $condition = [], $field = [])
     {
         try {
-            return self::$db->$name->findOne($condition, $field);
+            return $this->_db->$name->findOne($condition, $field);
         } catch (\MongoException $e) {
             exit($e->getMessage());
         }
@@ -231,7 +230,7 @@ class CMongo
     public function findCriteria($name, $condition = [], $options = [])
     {
         try {
-            $cursor =  self::$db->$name->find($condition, (array)$options['select']);
+            $cursor =  $this->_db->$name->find($condition, (array)$options['select']);
             if (is_numeric($options['limit']) && $options['limit'] > 0) {
                 $cursor->limit($options['limit']);
             }
@@ -261,51 +260,7 @@ class CMongo
         $cursor = $this->findCriteria($name, $condition, $options);
         return iterator_to_array($cursor);
     }
-
-    /**
-     * @deprecated
-     * 高级查询
-     * @see findCriteria()
-     * @param $name
-     * @param array $condition
-     * @param array $options
-     * @param array $specialOpt
-     * <pre>
-     *      ['$maxscan' => 10], //指定扫描文档上限
-     *      ['$showDiskLoc' => true], //显示结果在磁盘的位置
-     * </pre>
-     * @return array
-     */
-    public function specialFind($name, $condition = [], $options = [], $specialOpt = [])
-    {
-        $cursor = $this->findCriteria($name, $condition, $options);
-        if ($specialOpt) {
-            while (list($opt, $value) = each($specialOpt)) {
-                $cursor->_addSpecial($opt, $value);
-            }
-        }
-        return iterator_to_array($cursor);
-    }
-
-    /**
-     * 为查询添加快照，以保证数据一致性
-     * 数据处理过程（查询修改再保存），如果修改后的文档体积增大
-     * 原有的预留空间不够，mongoDB会将体积增大后的文档往末尾挪动，这样游标可能会返回
-     * 体积增大后的文档，导致数据不一致
-     *
-     * Note:使用快照会使查询变慢
-     * @see findCriteria()
-     * @param $name
-     * @param array $condition
-     * @param array $options
-     * @return \MongoCursor
-     */
-    public function snapshot($name, $condition = [], $options = [])
-    {
-        $cursor = $this->findCriteria($name, $condition, $options);
-        return $cursor->snapshot();
-    }
-
+    
     /**
      * @param $name
      * @param array $newData
@@ -324,32 +279,10 @@ class CMongo
     public function update($name, $newData = [], $condition = [], $options = [])
     {
         try {
-            return self::$db->$name->update($condition, $newData, $options);
+            return $this->_db->$name->update($condition, $newData, $options);
         } catch (\MongoException $e) {
             exit($e->getMessage());
         }
     }
-
-    public function command($args = [])
-    {
-        return self::$db->command(
-            array(
-                'text' => 'goods', //this is the name of the collection where we are searching
-                'search' => '呵呵', //the string to search
-                'limit' => 5, //the number of results, by default is 1000
-                /*'project' => Array( //the fields to retrieve from db
-                    'title' => 1
-                )*/
-            )
-        );
-    }
-
-    /**
-     * hasNext 查看游标是否还有其他结果
-     * next 迭代结果
-     */
-    public function cursor()
-    {
-
-    }
+    
 }
