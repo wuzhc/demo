@@ -1,5 +1,4 @@
 FROM php:7.0-fpm
-WORKDIR /data/wwwroot/default
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
