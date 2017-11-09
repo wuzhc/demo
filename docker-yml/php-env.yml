@@ -1,0 +1,18 @@
+version: "2"
+services:
+# 定义服务
+  db:
+    image: mariadb:10.1
+  enviroment:
+    MYSQL_ROOT_PASSWORD: "root"
+    MYSQL_DATABASE: "app"
+  volumes:
+    - db:/var/lib/mysql
+
+networks:
+# 服务需要用到的网络
+
+volumes:
+# 服务需要用到的数据卷
+  db:
+    driver: local
