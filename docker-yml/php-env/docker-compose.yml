@@ -6,7 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "root"
     volumes:
-      - ${WORKSPACE_XDEBUG_CONF}:/var/lib/mysql
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql
+
   php:
     # php 服务
     build: 
@@ -17,6 +18,14 @@ services:
         - IS_INSTALL_MEMCACHED=${IS_INSTALL_MEMCACHED}
         - IS_INSTALL_SWOOLE=${IS_INSTALL_SWOOLE}
       dockerfile: Dockerfile
+    
+  nginx:
+    # nginx 服务
+    image: nginx
+    ports: 
+      - "8080:80"
+    depends_on:
+      - php
 
 
 # networks:
