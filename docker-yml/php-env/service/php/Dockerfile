@@ -1,4 +1,5 @@
 FROM php:7.0-fpm
+WORKDIR /data/wwwroot/default
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -19,6 +20,10 @@ RUN if [ ${IS_INSTALL_REDIS} = true ]; then \
 # 是否安装memcached
 ARG IS_INSTALL_MEMCACHED=false
 RUN if [ ${IS_INSTALL_MEMCACHED} = true ]; then \
-	pecl install memcached \
+    apt-get update && apt-get install -y libmemcached-dev zlib1g-dev \
+	&& pecl install memcached \
 	&& docker-php-ext-enabled memcached \
 ;fi
+
+# 添加配置文件
+ADD ./config/php.ini /usr/local/etc/php/conf.d/

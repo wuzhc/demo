@@ -1,5 +1,11 @@
 version: "2"
 services:
+  app:
+    # 提供程序目录
+    image: tianon/true
+    volumes:
+      - ${WWWROOT}:/data/wwwroot/default
+
   db:
     # mysql服务
     image: mysql
@@ -18,6 +24,8 @@ services:
         - IS_INSTALL_MEMCACHED=${IS_INSTALL_MEMCACHED}
         - IS_INSTALL_SWOOLE=${IS_INSTALL_SWOOLE}
       dockerfile: Dockerfile
+    volumes_from:
+      - app
     
   nginx:
     # nginx 服务
@@ -26,6 +34,25 @@ services:
       - "8080:80"
     depends_on:
       - php
+    volumes_from:
+      - app
+    volumes:
+      - ${NGINX_CONF}:/etc/nginx/conf.d
+
+  redis:
+    # redis 服务
+    image: redis
+    ports:
+      - "6379:6379"
+
+  console:
+    # 控制台，小工具提供服务
+    build:
+      args:
+        - IS_INSTALL_GIT=${IS_INSTALL_GIT}
+      dockerfile: Dockerfile
+    volumes_from:
+      - app
 
 
 # networks:
