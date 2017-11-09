@@ -48,8 +48,7 @@ services:
   console:
     # 控制台，小工具提供服务
     build:
-      args:
-        - IS_INSTALL_GIT=${IS_INSTALL_GIT}
+      context: ./service/console
       dockerfile: Dockerfile
     volumes_from:
       - app
