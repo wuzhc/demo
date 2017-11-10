@@ -45,6 +45,13 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq:
+    # rabbitmq 消息队列服务
+    build:
+      context: ./service/rabbitmq
+      dockerfile: Dockerfile
+    
+
   console:
     # 控制台，小工具提供服务
     build:
