@@ -47,10 +47,10 @@ services:
 
   rabbitmq:
     # rabbitmq 消息队列服务
-    build:
-      context: ./service/rabbitmq
-      dockerfile: Dockerfile
-    
+    image: rabbitmq:3.6.1-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
   console:
     # 控制台，小工具提供服务
@@ -59,6 +59,15 @@ services:
       dockerfile: Dockerfile
     volumes_from:
       - app
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: "db"
+      PMA_USER: "root"
+      PMA_PASSWORD: "root"
 
 
 # networks:
