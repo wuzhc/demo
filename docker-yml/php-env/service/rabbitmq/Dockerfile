@@ -1,5 +1,7 @@
-FROM rabbitmq
-RUN rabbitmq-server start > /dev/null
-RUN rabbitmq-plugins enable rabbitmq_management > /dev/null
-RUN ["rabbitmqctl", "add_user", "admin", "admin123"]
-RUN ["rabbitmqtcl", "set_user_tags", "admin", "administrator"]
+FROM rabbitmq:latest
+
+RUN /usr/sbin/rabbitmq-plugins enable rabbitmq_federation_management 
+
+CMD /usr/sbin/rabbitmq-server
+
+EXPOSE 15672 
