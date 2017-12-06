@@ -12,7 +12,7 @@ for ($i = 0; $i < $argv[1]; $i++) {
     $process = new swoole_process(function (swoole_process $process) use ($i) {
         $process->name('child_process_' . $i); // 为进程命名，是swoole_set_process_name的别名
         log::w("child_process_$i");
-        sleep(3);
+//        sleep(3);
         $process->exit(0); // 0表示正常退出
     });
     $pid = $process->start(); // 执行fork调用，成功返回pid，失败返回false
