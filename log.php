@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: wuzhc
- * Date: 2017Äê03ÔÂ20ÈÕ
+ * Date: 2017ï¿½ï¿½03ï¿½ï¿½20ï¿½ï¿½
  * Time: 14:01
  */
 
@@ -14,7 +14,7 @@ class log
     /**
      * @var
      */
-    public static $logName = 'log.log';
+    public static $logName = '20171130.log';
 
     /**
      * Write log
@@ -38,14 +38,14 @@ class log
             $msg = json_encode($msg);
         }
 
-        $max = 4;     //ÖØÊÔ×î´ó´ÎÊý
+        $max = 4;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         $retries = 0;
         do {
             if ($retries > 0) {
                 sleep(1);
             }
             $retries++;
-        } while (!flock($fp, LOCK_EX) && $retries < $max); //¼ÓËøÊÇÎªÁË²¢·¢³¡¾°µÄ³öÏÖÎÊÌâ
+        } while (!flock($fp, LOCK_EX) && $retries < $max); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if ($max == $retries) {
             return false;
         }
@@ -98,7 +98,7 @@ class log
     }
 
     /**
-     * ´´½¨Ä¿Â¼
+     * ï¿½ï¿½ï¿½ï¿½Ä¿Â¼
      * @param $path
      * @param int $mode
      * @return bool
@@ -112,7 +112,7 @@ class log
     }
 
     /**
-     * É¾³ýÄ¿Â¼
+     * É¾ï¿½ï¿½Ä¿Â¼
      * @param $dir
      * @return bool
      */
