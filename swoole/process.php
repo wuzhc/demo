@@ -1,11 +1,20 @@
 <?php
 
-$process = new swoole_process(function (swoole_process $process) {
-    $process->name('child_process'); // 为进程命名，是swoole_set_process_name的别名
-    // do something
-    $process->write('1');
-    $process->exit(0); // 0表示正常退出
-});
+if ($argc < 2 || $argv[1] == '--help') {
+    printf("Usage: %s num \n", $argv[0]);
+    exit;
+}
+
+for ($i = 0; $i < $argv[1]; $i++) {
+    $process = new swoole_process(function (swoole_process $process) use ($i) {
+        $process->name('child_process_' . $i); // 为进程命名，是swoole_set_process_name的别名
+        // do something
+        $process->write("hello world");
+        sleep(30);
+        $process->exit(0); // 0表示正常退出
+    });
+}
+
 
 $pid = $process->start(); // 执行fork调用，成功返回pid，失败返回false
 if (false == $pid) {
