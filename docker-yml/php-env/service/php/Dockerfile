@@ -21,8 +21,12 @@ ARG IS_INSTALL_MEMCACHED=false
 RUN if [ ${IS_INSTALL_MEMCACHED} = true ]; then \
     apt-get update && apt-get install -y libmemcached-dev zlib1g-dev \
 	&& pecl install memcached \
-	&& docker-php-ext-enabled memcached \
+	&& docker-php-ext-enable memcached \
 ;fi
+
+# mongodb扩展
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
 
 # 添加配置文件
 ADD ./config/php.ini /usr/local/etc/php/conf.d/
