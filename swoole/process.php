@@ -39,6 +39,8 @@ swoole_process::signal(SIGCHLD, function ($sig) use (&$pids) {
     }
     if (empty($pids)) {
         exit(0);
+    } else {
+        var_dump($pids);
     }
 });
 
