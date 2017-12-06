@@ -29,6 +29,7 @@ for ($i = 0; $i < $argv[1]; $i++) {
 //        });
 
 while ($data = $process->read()) {
+    echo "has data \n";
     print_r($data);
 }
 
