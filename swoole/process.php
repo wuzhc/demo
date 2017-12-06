@@ -40,8 +40,8 @@ echo "waiting... \n";
 // 安装sigchld信号处理器
 swoole_process::signal(SIGCHLD, function ($sig) use (&$pids) {
 //    必须为false，非阻塞模式（非阻塞 + signal异步处理）
-    while ($ret = swoole_process::wait(false) && $pids) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
-        var_dump($ret);
+    while ($ret = swoole_process::wait(false)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
+        var_dump($pids);
         echo "PID={$ret['pid']}\n";
         unset($pids[$ret['pid']]);
     }
