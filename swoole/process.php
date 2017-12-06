@@ -36,6 +36,7 @@ swoole_process::signal(SIGCHLD, function ($sig) {
         echo PHP_EOL;
         echo "PID={$ret['pid']}\n";
     }
+    exit(0);
 });
 
 foreach ($pids as $pid) {
