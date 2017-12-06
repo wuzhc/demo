@@ -35,9 +35,19 @@ foreach ($pids as $pid) {
 echo "waiting... \n";
 
 // 阻塞等待子进程结束
-swoole_process::wait(true);
+//swoole_process::wait(true);
 
-//while (!empty($pids)) {
-//    print_r($pids);
-//}
+// 安装sigchld信号处理器
+swoole_process::signal(SIGCHLD, function ($sig) use (&$pids) {
+//    必须为false，非阻塞模式（非阻塞 + signal异步处理）
+    while ($ret = swoole_process::wait(false)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
+        echo "PID={$ret['pid']}\n";
+        unset($pids[$ret['pid']]);
+    }
+});
+
+foreach ($pids as $pid) {
+    echo "process $pid \n";
+}
+
 echo "nothing \n";
