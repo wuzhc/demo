@@ -40,8 +40,6 @@ swoole_process::signal(SIGCHLD, function ($sig) use (&$data) {
     }
     if (empty($data)) {
         exit(0);
-    } else {
-        var_dump($data);
     }
 });
 
