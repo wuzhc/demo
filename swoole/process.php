@@ -9,16 +9,14 @@ for ($i = 0; $i < $argv[1]; $i++) {
     $process = new swoole_process(function (swoole_process $process) use ($i) {
         $process->name('child_process_' . $i); // 为进程命名，是swoole_set_process_name的别名
         // do something
-        $process->write("hello world");
+        $process->write("hello world \n");
         sleep(30);
         $process->exit(0); // 0表示正常退出
     });
-}
-
-
-$pid = $process->start(); // 执行fork调用，成功返回pid，失败返回false
-if (false == $pid) {
-    exit("fork failed \n");
+    $pid = $process->start(); // 执行fork调用，成功返回pid，失败返回false
+    if (false == $pid) {
+        exit("fork failed \n");
+    }
 }
 
 // 安装sigchld信号处理器
@@ -31,3 +29,7 @@ if (false == $pid) {
 
 $data = $process->read();
 print_r($data);
+
+while ($ret = swoole_process::wait(true)) {
+    echo "PID={$ret['pid']}\n";
+}
