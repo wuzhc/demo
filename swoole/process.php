@@ -6,6 +6,14 @@ if ($argc < 2 || $argv[1] == '--help') {
     exit;
 }
 
+// 安装sigchld信号处理器
+swoole_process::signal(SIGCHLD, function ($sig) {
+//    必须为false，非阻塞模式（非阻塞 + signal异步处理）
+    while ($ret = swoole_process::wait(false)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
+        echo "PID={$ret['pid']}\n";
+    }
+});
+
 $pids = [];
 
 for ($i = 0; $i < $argv[1]; $i++) {
@@ -37,12 +45,5 @@ echo "waiting... \n";
 // 阻塞等待子进程结束
 //swoole_process::wait(true);
 
-// 安装sigchld信号处理器
-swoole_process::signal(SIGCHLD, function ($sig) {
-//    必须为false，非阻塞模式（非阻塞 + signal异步处理）
-    while ($ret = swoole_process::wait(false)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
-        echo "PID={$ret['pid']}\n";
-    }
-});
 
 echo "nothing \n";
