@@ -28,9 +28,11 @@ for ($i = 0; $i < $argv[1]; $i++) {
 //    }
 //});
 
-var_dump($pids);
+foreach ($pids as $pid) {
+    echo "process $pid \n";
+}
 
-echo "waiting...";
+echo "waiting... \n";
 
 // 阻塞等待子进程结束
 swoole_process::wait(true);
