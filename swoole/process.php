@@ -1,5 +1,5 @@
 <?php
-include "../log.php";
+include dirname(__DIR__) . "/log.php";
 
 if ($argc < 2 || $argv[1] == '--help') {
     printf("Usage: %s num \n", $argv[0]);
