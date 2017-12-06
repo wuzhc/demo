@@ -28,8 +28,9 @@ for ($i = 0; $i < $argv[1]; $i++) {
 //            }
 //        });
 
-$data = $process->read();
-print_r($data);
+while ($data = $process->read()) {
+    print_r($data);
+}
 
 while ($ret = swoole_process::wait(true)) {
     echo "PID={$ret['pid']}\n";
