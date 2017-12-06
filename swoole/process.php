@@ -28,7 +28,7 @@ swoole_process::signal(SIGCHLD, function ($sig) use (&$pids) {
     }
 });
 
-while (!empty($pids)) {
-    print_r($pids);
-}
+//while (!empty($pids)) {
+//    print_r($pids);
+//}
 echo "nothing \n";
