@@ -11,6 +11,7 @@ echo "parent pid = $pid \n";
 
 swoole_process::signal(SIGCHLD, function($sig){
     echo "caught signal $sig \n";
+    return ;
 });
 
 for ($i = 0; $i < 5; $i++) {
@@ -28,5 +29,5 @@ while ($ret = swoole_process::wait(true)) { // 回收子进程，否则子进程
     $total++;
 }
 echo "$total child process exit \n";
-exit("kill");
+exit(0);
 
