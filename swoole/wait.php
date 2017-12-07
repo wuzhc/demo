@@ -6,7 +6,7 @@
  * Time: 10:40
  */
 
-$pid = posix_getgid();
+$pid = posix_getpid();
 echo "parent pid = $pid \n";
 
 swoole_process::signal(SIGCHLD, function($sig){
