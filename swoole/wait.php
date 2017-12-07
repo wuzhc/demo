@@ -15,9 +15,12 @@ swoole_process::signal(SIGCHLD, function($sig){
 
 for ($i = 0; $i < 5; $i++) {
     $process = new swoole_process(function (swoole_process $process) {
-        echo "child pid = $process->pid \n";
+        echo "pid = $process->pid run \n";
         $process->exit(0);
     });
+    if ($pid = $process->start()) {
+        echo "pid = $pid fork success \n";
+    }
 }
 
 $total = 0;
