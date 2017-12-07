@@ -11,7 +11,7 @@ echo "parent pid = $pid \n";
 
 swoole_process::signal(SIGCHLD, function($sig){
     echo "caught signal $sig \n";
-    return ;
+    return 0;
 });
 
 for ($i = 0; $i < 5; $i++) {
