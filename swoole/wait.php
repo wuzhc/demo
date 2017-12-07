@@ -24,9 +24,9 @@ for ($i = 0; $i < 5; $i++) {
 }
 
 $total = 0;
-while ($ret = swoole_process::wait(false)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
+while ($ret = swoole_process::wait(true)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
     $total++;
 }
-echo "$total child process exit";
+echo "$total child process exit \n";
 exit;
 
