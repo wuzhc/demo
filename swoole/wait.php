@@ -28,5 +28,5 @@ while ($ret = swoole_process::wait(true)) { // 回收子进程，否则子进程
     $total++;
 }
 echo "$total child process exit \n";
-exit(0);
+exit("kill");
 
