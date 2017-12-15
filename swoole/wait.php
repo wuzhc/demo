@@ -11,7 +11,6 @@ echo "parent pid = $pid \n";
 
 swoole_process::signal(SIGCHLD, function($sig){
     echo "caught signal $sig \n";
-    exit;
 });
 
 for ($i = 0; $i < 5; $i++) {
@@ -25,7 +24,7 @@ for ($i = 0; $i < 5; $i++) {
 }
 
 $total = 0;
-while ($ret = swoole_process::wait(true)) { // 回收子进程，否则子进程会变成僵尸进程浪费资源
+while ($ret = swoole_process::wait(true)) {
     $total++;
 }
 echo "$total child process exit \n";
