@@ -11,8 +11,7 @@ header("Content-Type:text/html;charset=utf-8");
 $org = 650;
 $begin = '2017-12-14';
 $beginTimestamp = strtotime($begin);
-//$cur = date('Y-m-d');
-$cur = '2018-03-30';
+$cur = date('Y-m-d');
 
 echo sprintf('<b>%s交易金额为：%d元</b><br>', $begin, $org);
 echo sprintf('<b>掉价规则：一天掉5元，满七天后掉50元，例如650六天后剩余620，七天后剩余600</b><br><br>');
