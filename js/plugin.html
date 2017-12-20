@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="./jquery-2.1.0.min.js"></script>
+</head>
+<body>
+插件开发三种模式：<br>
+<ul>
+<li>1，$.extend</li>
+<li>2，$.fn</li>
+<li>3，$.widget</li>
+</ul>
+</body>
+</html>
+<script>
+    $.extend({
+        sayHello: function(name){
+            name = name || "world";
+            console.log("hello, " + name);
+        }
+    });
+    $.sayHello();
+    $.sayHello("wuzhc");
+
+    ;(function(){
+        $.fn.myPlugin = function(options) {
+            var defaults = {
+                color: "red",
+                fontSize: "12px"
+            };
+            var settings = $.extend({}, defaults, options);
+
+            this.css({ // this是jquery类型集合
+                color: settings.color,
+                fontSize: settings.fontSize
+            });
+
+            return this.each(function() { // return 支持链式调用
+                // 对每个元素进行操作
+                $(this).append(" [by wuzhc]"); // this是普通DOM元素
+            });
+        };
+    })();
+
+    $("li").myPlugin({
+        color: "blue",
+        fontSize: "20px"
+    });
+</script>
