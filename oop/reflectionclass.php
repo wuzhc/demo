@@ -29,6 +29,9 @@ class Person
 
 Class zcClass
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return '¸ßÒ»¶þ°à';
