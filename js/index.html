@@ -8,12 +8,12 @@
 </head>
 <body>
 同一页面引用不同版本的jquery<br>
-// 现在window.$和window.jQuery是2.1.0版本:<br>
+现在window.$和window.jQuery是2.1.0版本:<br>
 console.log($().jquery); // => '2.1.0'<br>
 var $jq = jQuery.noConflict(true);<br>
-// 现在window.$和window.jQuery被恢复成1.8.3版本:<br>
+现在window.$和window.jQuery被恢复成1.8.3版本:<br>
 console.log($().jquery); // => '1.8.3'<br>
-// 可以通过$jq访问1.8.3版本的jQuery了  <br>
+可以通过$jq访问1.8.3版本的jQuery了  <br>
 </body>
 </html>
 <script>
