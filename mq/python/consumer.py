@@ -1,7 +1,8 @@
 # coding=utf-8
 __author__ = 'wuzhc'
 '''
-client端
+消费者
+python consumer.py
 '''
 import socket
 import json
@@ -30,6 +31,7 @@ while True:
         print('err: ' + resDeco['error'])
         continue
 
+    # 如果有设置超时时间,一定要显示调用ack确认,否则job将重复被消费
     if resDeco['result']['TTR'] > 0:
         data = {
             'method': 'Service.Ack',

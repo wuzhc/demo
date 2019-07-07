@@ -1,7 +1,8 @@
 # coding=utf-8
 __author__ = 'wuzhc'
 '''
-client端
+生成者
+python producer.py
 '''
 import socket
 import json
@@ -18,7 +19,7 @@ n = 0
 topic = ['topic_1', 'topic_2', 'topic_3', 'topic_4']
 while True:
     job = {
-        'id': 'xxxx_id' + str(uuid.uuid4()),
+        'id': 'xxxx_id' + str(uuid.uuid4()), # 必须是一个唯一值
         'topic': topic[random.randint(0, len(topic) - 1)],
         'body': 'this is a job',
         'delay': str(random.randint(0, 60)),
@@ -33,6 +34,7 @@ while True:
     res = client.recv(1024)
     print(res.decode())
 
+    # 生产10000job后退出
     n += 1
     if n > 10000:
         break
